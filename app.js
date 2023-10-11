@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path'); // Import the 'path' module
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -10,11 +11,18 @@ mongoose.connect('mongodb://localhost/reminderPro', {
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+
+// Serve static files from the 'public' folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 const reminderSchema = new mongoose.Schema({
-    text: String,
-    date: Date
+    subject: String,
+    description: String,
+    date: Date,
+    email: String,
+    contactNo: String,
+    smsNo: String,
+    recur: [Number]
 });
 
 const Reminder = mongoose.model('Reminder', reminderSchema);
@@ -28,14 +36,24 @@ app.get('/', async (req, res) => {
     }
 });
 
+app.post('/add', async (req, res) => {
+    try {
+        const newReminder = new Reminder({
+            subject: req.body.subject,
+            description: req.body.description,
+            date: req.body.date,
+            email: req.body.email,
+            contactNo: req.body.contactNo,
+            smsNo: req.body.smsNo,
+            recur: req.body.recur
+        });
 
-app.post('/add', (req, res) => {
-    const newReminder = new Reminder({
-        text: req.body.text,
-        date: req.body.date
-    });
-    newReminder.save();
-    res.redirect('/');
+        await newReminder.save();
+        res.redirect('/');
+    } catch (err) {
+        console.error('Error saving reminder:', err);
+        res.status(500).send('Error saving reminder');
+    }
 });
 
 app.listen(port, () => {

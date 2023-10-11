@@ -7,19 +7,47 @@
 </head>
 
 <body>
-    <h1>Reminders</h1>
-    <form action="/add" method="POST">
-        <input type="text" name="text" placeholder="Enter your reminder">
-        <input type="date" name="date">
-        <button type="submit">Add Reminder</button>
+    <h1>Welcome to the Reminder Application
+    </h1>
+
+    <!-- Add a form for creating reminders -->
+    <link action="/" method="POST">
+    <label for="date">Select a Date: Calendar icon</label>
+    <input type="date" name="date" id="date" required>
+
+    <label for="subject">Subject:</label>
+    <select name="subject" id="subject">
+        <option value="subject1">Task 1</option>
+        <option value="subject2">Task 2</option>
+        <!-- Add more subject options as needed -->
+    </select>
+
+    <label for="description">Add Description:</label>
+    <textarea name="description" id="description" rows="4" cols="50"></textarea>
+
+    <label for="email">Email Address:</label>
+    <input type="email" name="email" id="email" required>
+
+    <label for="contactNo">Contact No:</label>
+    <input type="text" name="contactNo" id="contactNo">
+
+    <label for="smsNo">SMS No:</label>
+    <input type="text" name="smsNo" id="smsNo">
+
+    <label>Recur for next:</label>
+    <input type="checkbox" name="recur7" id="recur7" value="7"> 7 Days
+    <input type="checkbox" name="recur5" id="recur5" value="5"> 5 Days
+    <input type="checkbox" name="recur3" id="recur3" value="3"> 3 Days
+    <input type="checkbox" name="recur2" id="recur2" value="2"> 2 Days
+
+    <button type="submit">Add Reminder</button>
+
+
     </form>
-    <ul>
-        <% reminders.forEach(function(reminder) { %>
-            <li>
-                <%= reminder.text %> - <%= reminder.date %>
-            </li>
-            <% }); %>
-    </ul>
+
+    <!-- Display existing reminders below the form -->
+
+
 </body>
 
 </html>
